@@ -1,7 +1,6 @@
-from django.db.models.query import QuerySet
 from rest_framework import serializers
 
-from core.models import Doctor, MedicalSpecialty
+from core.models import Doctor, MedicalSpecialty, AppointmentScheduling
 
 
 class MedicalSpecialtySerializer(serializers.ModelSerializer):
@@ -19,3 +18,12 @@ class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = ['id', 'name', 'crm', 'email', 'phone_number', 'specialty']
+
+
+class AppointmentSchedulingSerializer(serializers.ModelSerializer):
+    """Serializer for appointment objects"""
+    doctor = DoctorSerializer()
+
+    class Meta:
+        model = AppointmentScheduling
+        fields = ['id', 'day', 'hour', 'scheduling_date', 'doctor']
