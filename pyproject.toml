@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "medicar"
-version = "0.1.1"
+version = "0.1.2"
 description = ""
 authors = ["raiizoor <mateus.informatica44@gmail.com>"]
 
@@ -9,6 +9,7 @@ python = "^3.8"
 djangorestframework = "^3.12.4"
 Django = "^3.2.7"
 django-filter = "^2.4.0"
+ipdb = "^0.13.9"
 
 [tool.poetry.dev-dependencies]
 
