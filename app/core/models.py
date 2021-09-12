@@ -64,10 +64,20 @@ class Doctor(models.Model):
 class AppointmentScheduling(models.Model):
     day = models.DateField()
     hour = models.TimeField()
-    scheduling_date = models.DateTimeField()
+    scheduling_date = models.DateTimeField(auto_now=True)
 
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
+
+
+class Hour(models.Model):
+    hour = models.TimeField()
+
+
+class AvailableSchedule(models.Model):
+    day = models.DateField()
+    hour = models.ForeignKey(Hour, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
