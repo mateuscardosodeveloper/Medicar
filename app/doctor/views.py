@@ -34,10 +34,23 @@ class DoctorViewSet(BaseRecipeAttrViewSet):
     filterset_fields = ['specialty']
 
 
-class AppointmentSchedulingViewSet(BaseRecipeAttrViewSet):
+class AppointmentSchedulingViewSet(viewsets.GenericViewSet,
+                                   mixins.ListModelMixin):
     """Manage appointment in the database"""
     queryset = models.AppointmentScheduling.objects.all().order_by(
         'day',
         'hour'
     ).filter(day__gte=datetime.now())
     serializer_class = serializers.AppointmentSchedulingSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        """Retrieve the appointment for the authenticated user"""
+        doctors = self.request.query_params.get('doctor')
+        queryset = self.queryset
+        if doctors:
+            doctor_ids = self._params_to_ints(doctors)
+            queryset = queryset.filter(doctors__id__in=doctor_ids)
+
+        return queryset.filter(user=self.request.user)
