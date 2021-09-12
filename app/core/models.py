@@ -57,5 +57,17 @@ class Doctor(models.Model):
 
     specialty = models.ForeignKey(MedicalSpecialty, on_delete=models.CASCADE)
 
-    def __repr__(self):
+    def __str__(self):
         return self.name
+
+
+class AppointmentScheduling(models.Model):
+    day = models.DateField()
+    hour = models.TimeField()
+    scheduling_date = models.DateTimeField()
+
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
