@@ -40,10 +40,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class MedicalSpecialty(models.Model):
     specialty = models.CharField(max_length=255)
-    # user = models.ForeignKey(
-    #     settings.AUTH_USER_MODEL,
-    #     on_delete=models.CASCADE
-    # )
 
     def __str__(self):
         return self.specialty
@@ -77,10 +73,13 @@ class Hour(models.Model):
     hour = models.TimeField()
 
     def __str__(self):
-        return str(self.hour)
+        return self.hour.strftime('%H:%M')
 
 
 class AvailableSchedule(models.Model):
     day = models.DateField()
     hour = models.ManyToManyField('Hour')
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+
+    def hours(self):
+        return [p.hour for p in self.hour.all()]

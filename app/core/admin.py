@@ -36,7 +36,7 @@ class AppointmentSchedulingAdmin(admin.ModelAdmin):
 
 
 class AvailableScheduleAdmin(admin.ModelAdmin):
-    list_display = ['id', 'day', 'doctor']
+    list_display = ['id', 'day', 'doctor', 'hours']
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.MedicalSpecialty)

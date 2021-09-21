@@ -7,6 +7,7 @@ router = DefaultRouter()
 router.register('medical_specialty', views.MedicalSpecialtyViewSet)
 router.register('doctor', views.DoctorViewSet)
 router.register('appointment', views.AppointmentSchedulingViewSet)
+router.register('schedule', views.AvailableScheduleViewSet)
 app_name = 'doctor'
 
 urlpatterns = [

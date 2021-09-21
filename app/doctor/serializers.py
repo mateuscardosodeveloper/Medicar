@@ -1,6 +1,12 @@
 from rest_framework import serializers
 
-from core.models import Doctor, MedicalSpecialty, AppointmentScheduling
+from core.models import (
+    Doctor,
+    MedicalSpecialty, 
+    AppointmentScheduling,
+    AvailableSchedule,
+    Hour
+)
 
 
 class MedicalSpecialtySerializer(serializers.ModelSerializer):
@@ -27,3 +33,19 @@ class AppointmentSchedulingSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppointmentScheduling
         fields = ['id', 'day', 'hour', 'scheduling_date', 'doctor']
+
+
+class HourSerializer(serializers.RelatedField):
+    def to_representation(self, value):
+        hour = value.hour.strftime("%H:%M")
+        return '%s' % hour 
+
+
+class AvailableScheduleSerializer(serializers.ModelSerializer):
+    """Serializer for available schedule objects"""
+    doctor = DoctorSerializer()
+    hour = HourSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = AvailableSchedule
+        fields = ['id', 'doctor', 'day', 'hour']
